@@ -12,7 +12,8 @@ My Project:
 - Implemented command line functionality with hash - print, add <item>, remove <item>
 - Program loops until q is entered (to quit)
   
-To Run
+  
+To Run the Program:
 - make
 -  ./hash (alone or with print, add <item>, or remove <item>)
 -  program loops until q is entered
