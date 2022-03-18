@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
 template<class T>
@@ -26,8 +27,10 @@ public:
 	  // Each slot is initialized with default value of list<T>
 	  //  which is an empty list
 	  table = new list<T>[capacity];
+	  load_table();
 	}
 	~HashTable() {
+	  save_table();
 	  delete[] table;
 	}
 
@@ -103,6 +106,36 @@ public:
 		}
 	  }
 	  delete[] old_table;
+	}
+
+	void load_table() {
+	  ifstream inFile("saveFile.txt");
+		if(inFile.is_open()) {
+		  while(!inFile.eof()) {
+			T item;
+			getline(inFile, item);
+			if(item != "") {
+			  add(item);
+			}
+		  }
+		  inFile.close();
+		} else {
+		  cerr << "Error opening file" << endl;
+	  }
+	}
+
+	void save_table() {
+	  ofstream outFile("saveFile.txt");
+	  if(outFile.is_open()) {
+		for (int i = 0; i < capacity; i++) {
+		  for (auto item: table[i]) {
+			outFile << item << endl;
+		  }
+		}
+		outFile.close();
+	  } else {
+		cerr << "Error opening file" << endl;
+	  }
 	}
 };
 
